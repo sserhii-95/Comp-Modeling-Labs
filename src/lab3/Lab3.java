@@ -55,7 +55,7 @@ MD:	 0.0
         Part md = new Part("MD", 375);
 
         List<Part> partList = Arrays.asList(cpu, ram, norht, south,
-                                            isa, au, lpt, com, md);
+                isa, au, lpt, com, md);
 
         cpu.addNext(cpu, 0.6);
         cpu.addNext(norht, 0.4);
@@ -88,8 +88,7 @@ MD:	 0.0
         system.run();
         System.out.println("---//---");
 
-        for(Part part : partList)
-            System.out.println(part);
+        partList.forEach(System.out::println);
 
         System.out.println("---//---");
 

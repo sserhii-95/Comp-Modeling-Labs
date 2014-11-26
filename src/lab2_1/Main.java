@@ -1,14 +1,13 @@
 package lab2_1;
 
-import lab2_1.smo_types.FIFOType;
+
 import lab2_1.smo_types.LIFOType;
 import lab2_1.smo_types.PERType;
 import lab2_1.smo_types.RRType;
 
-import java.util.ArrayList;
 
 /**
- * Created by Sergey on 02.11.2014.
+ * Created by Siryy Sergiy
  */
 public class Main {
 
@@ -23,33 +22,6 @@ public class Main {
         per.work();
         rr.work();
 
-        ArrayList<MyTask> lpool = lifo.pool;
-        ArrayList<MyTask> ppool = per.pool;
-        ArrayList<MyTask> rpool = rr.pool;
-
-/*
-        for(int i = 0;; i++){
-            System.out.println("-------");
-            int k = 0;
-            if (i < fpool.size()){
-                k++;
-                System.out.println("fifo "+fpool.get(i));
-            }
-            if (i < lpool.size()){
-                k++;
-                System.out.println("lifo "+lpool.get(i));
-            }
-            if (i < ppool.size()){
-                k++;
-                System.out.println("per "+ppool.get(i));
-            }
-            if (i < rpool.size()){
-                k++;
-                System.out.println("rr "+rpool.get(i));
-            }
-            if (k == 0) break;
-        }
-*/
         double[] k = {-1, -8, -1, 3, 5};
 
         System.out.println("LIFO: " + lifo.getFunc(k)+"\n");

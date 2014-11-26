@@ -1,9 +1,10 @@
 package lab2_1;
 
-import java.util.Formatter;
 
 /**
- * Created by Sergey on 30.10.2014.
+ *
+ * @author Siryy Sergiy
+ * created in 26.11.2014
  */
 public class MyTask {
 

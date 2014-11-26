@@ -2,10 +2,9 @@ package lab4;
 
 import lab3.Part;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Siryy Sergiy
@@ -49,11 +48,7 @@ public class PartPool {
     }
 
     public List<Part> getParts() {
-        List<Part> parts = new ArrayList<>();
-        for (Iterator<Part> iterator = this.parts.values().iterator(); iterator.hasNext(); ) {
-            parts.add(iterator.next());
-        }
-        return parts;
+        return this.parts.values().stream().collect(Collectors.toList());
     }
 
 }

@@ -7,9 +7,7 @@ import lab4.PartPool;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author
- */
+
 public class State {
 
     public static State create() {
@@ -43,8 +41,15 @@ public class State {
                 for (int j = 0; j < partList.size(); j++) {
 
                     Part toPart = partList.get(j);
-                    State next = clone();
+                    State next = null;
+                    try {
+                        next = clone();
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
 
+
+                    if (next == null) throw new AssertionError();
 
                     next.parts.get(i).reset();
                     next.parts.get(i).addTaskToProcessor();
@@ -65,24 +70,22 @@ public class State {
         return null;
     }
 
-    public int getParent() {
-        return parent;
-    }
-
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         for (PartModel model : parts) {
             s.append(model.getNameLine());
         }
         s.append("\n");
         for (PartModel model : parts) {
-            s.append(model.toString() + " ");
+            s.append(model.toString()).append(" ");
         }
-        s.append(parent+" "+StatePool.getInstance().indexOf(this));
+        s.append(parent).append(" ").append(StatePool.getInstance().indexOf(this));
         return s.toString();
     }
 
-    public State clone() {
+    @Override
+    public State clone() throws CloneNotSupportedException {
+        super.clone();
         State state = new State();
         state.parent = StatePool.getInstance().indexOf(this);
         for (int i = 0; i < parts.size(); i++)

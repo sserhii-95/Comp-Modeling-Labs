@@ -24,16 +24,12 @@ public class StatePool {
 
     private List<State> states;
     private List<List<Pair>> uv;
-    private int type = 1; // 0 if linear, 1 if discrete
+    private final int type; // 0 if linear, 1 if discrete
 
     private StatePool() {
         states = new ArrayList<>();
         uv = new ArrayList<>();
-    }
-
-
-    public boolean isUniq(State state) {
-        return indexOf(state) >= 0;
+        type = 1;
     }
 
     public int indexOf(State state) {
@@ -61,8 +57,8 @@ public class StatePool {
 
 
     public void createGraph() {
-        for (int i = 0; i < states.size(); i++) {
-            states.get(i).getNext();
+        for (State state : states) {
+            state.getNext();
         }
     }
 

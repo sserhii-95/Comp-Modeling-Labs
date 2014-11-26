@@ -11,9 +11,9 @@ public class MySystem {
 
     private double time; // Час життя системи
 
-    public static ArrayList<Pair> problems = new ArrayList<Pair>();
+    public static ArrayList<Pair> problems = new ArrayList<>();
 
-    public MySystem(Part head, int problems, double time){
+    public MySystem(Part head, int problems, double time) {
         this.head = head;
         this.time = time;
 
@@ -66,7 +66,7 @@ public class MySystem {
 
 }
 
-class Pair{
+class Pair {
     Part part;
     double time;
 
@@ -75,8 +75,8 @@ class Pair{
         this.time = time;
     }
 
-    public String toString(){
-        return (int)(time * 1000) / 1000.0 + "  " + part;
+    public String toString() {
+        return (int) (time * 1000) / 1000.0 + "  " + part;
     }
 }
 

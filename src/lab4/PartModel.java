@@ -5,9 +5,6 @@ import lab3.Part;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author
- */
 public class PartModel {
 
     private Part part;      // reference on equal Part
@@ -31,6 +28,7 @@ public class PartModel {
         this(part.name, part.queue, part.processor, part.flag);
     }
 
+    /*
     public PartModel(String name) {
         this.name = name;
         this.part = PartPool.getInstance().byName(name);
@@ -41,13 +39,15 @@ public class PartModel {
         this.processor = part.processor;
         this.queue = part.queue;
     }
+    */
 
 
     public String toString() {
         return "<" + queue + ", " + processor + ", " + flag + ">";
     }
 
-    public PartModel clone() {
+    public PartModel clone() throws CloneNotSupportedException {
+        super.clone();
         return new PartModel(name, queue, processor, flag);
     }
 
@@ -77,14 +77,6 @@ public class PartModel {
 
         while(buf.length() <= s.length()) buf += " ";
         return buf;
-    }
-
-    public int getFlag() {
-        return flag;
-    }
-
-    public int getQueue() {
-        return queue;
     }
 
     public int getProcessor() {

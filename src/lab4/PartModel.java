@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sergey
+ * @author
  */
 public class PartModel {
 

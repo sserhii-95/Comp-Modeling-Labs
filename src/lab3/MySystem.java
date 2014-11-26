@@ -11,50 +11,53 @@ public class MySystem {
 
     private double time; // Час життя системи
 
-    public static ArrayList<Pair> problems = new ArrayList<>();  // Таблиця рощміщення фішок
+    public static ArrayList<Pair> problems = new ArrayList<Pair>();
 
     public MySystem(Part head, int problems, double time){
         this.head = head;
         this.time = time;
 
-        for(int i = 0; i < problems; i++)
+        for (int i = 0; i < problems; i++) {
             head.addTask();
+//            System.out.println(head.queue);
+        }
     }
 
     /**
      * Метод, який моделює роботу системи
      */
-    public void run(){
-        System.out.println(head);
+    public void run() {
 
-        int k = 1000;
-        for(int i = 0; i < head.getProcessorsCount(); i++) {
+        int k = 100000000;
+        for (int i = 0; i < head.getProcessorsCount(); i++) {
             problems.add(new Pair(head, head.addTaskToProcessor(0)));
         }
 
-        for(int i = 0; i < k; i++) {
+
+        for (int i = 0; i < k; i++) {
 
             Pair p = problems.get(0);
 
-            for(int j = 1; j < problems.size(); j++)        // search min time problem
+            for (int j = 1; j < problems.size(); j++)        // search min time problem
                 if (problems.get(j).time < p.time)
-                    p  = problems.get(j);
+                    p = problems.get(j);
 
             problems.remove(p);
             p.part.reset();
 
+            if (p.time >= time) break;
+
             Part next = p.part.getNext();
 
             next.addTask();
-            System.out.println(next);
             if (next != p.part) {
                 if (next.canWork()) {
                     double newtime = next.addTaskToProcessor(p.time);
                     problems.add(new Pair(next, newtime));
-                }   
+                }
             }
 
-            if (p.part.canWork()){
+            if (p.part.canWork()) {
                 double newtime = p.part.addTaskToProcessor(p.time);
                 problems.add(new Pair(p.part, newtime));
             }

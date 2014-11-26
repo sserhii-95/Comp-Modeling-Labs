@@ -9,8 +9,10 @@ import org.la4j.vector.dense.BasicVector;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.exp;
+
 /**
- * @author Sergey
+ * @author Siryy Sergiy
  */
 public class StatePool {
 
@@ -22,6 +24,7 @@ public class StatePool {
 
     private List<State> states;
     private List<List<Pair>> uv;
+    private int type = 1; // 0 if linear, 1 if discrete
 
     private StatePool() {
         states = new ArrayList<>();
@@ -58,17 +61,8 @@ public class StatePool {
 
 
     public void createGraph() {
-
         for (int i = 0; i < states.size(); i++) {
-            System.out.println(states.get(i));
             states.get(i).getNext();
-        }
-
-        for (int i = 0; i < uv.size(); i++) {
-            System.out.print(i + ": ");
-            for (int j = 0; j < uv.get(i).size(); j++)
-                System.out.print(uv.get(i).get(j).to + "(" + uv.get(i).get(j).l + ") ");
-            System.out.println();
         }
     }
 
@@ -76,27 +70,53 @@ public class StatePool {
     public void solve() {
         double[][] matrix = new double[uv.size() + 1][uv.size()];
         for (int i = 0; i < uv.size(); i++) {
-            for (int j = 0; j < uv.get(i).size(); j++)
-                {
-                    matrix[i][i] -= uv.get(i).get(j).l;
-                    matrix[uv.get(i).get(j).to][i] += uv.get(i).get(j).l;
-                }
+            for (int j = 0; j < uv.get(i).size(); j++) {
+                matrix[i][i] -= uv.get(i).get(j).l;
+                matrix[uv.get(i).get(j).to][i] += uv.get(i).get(j).l;
+            }
         }
 
         for (int i = 0; i < uv.size(); i++)
             matrix[matrix.length - 1][i] = 1;
 
 
-        Basic2DMatrix b = new Basic2DMatrix(matrix);
-        LinearSystemSolver solver = b.withSolver(LinearAlgebra.LEAST_SQUARES);
-
-        Vector v = new BasicVector(new BasicVector(matrix.length));
-        v.set(v.length() - 1, 1);
-
-        v = solver.solve(v, LinearAlgebra.DENSE_FACTORY);
-        System.out.println(v);
+        double delta = 1e-3;
 
         double[][] p = new double[uv.size()][4];
+
+
+        if (type == 1) {
+
+            double[][] mat = new double[matrix.length - 1][matrix[0].length];
+            for (int i = 0; i < mat.length; i++) {
+                for (int j = 0; j < mat[0].length; j++)
+                    if (matrix[i][j] != 0) {
+                        mat[i][j] = 1 - exp(-delta * matrix[i][j]);
+                    }
+            }
+
+            for (int i = 0; i < mat.length; i++) {
+                matrix[i][i] = 0;
+                for (int j = 0; j < mat[i].length; j++)
+                    matrix[i][i] -= mat[i][j];
+                for (int j = 0; j < mat[i].length; j++)
+                    if (mat[i][j] != 0)
+                        matrix[i][j] = mat[i][j];
+            }
+
+        }
+
+
+        Basic2DMatrix b = new Basic2DMatrix(matrix);
+        LinearSystemSolver solver = b.withSolver(LinearAlgebra.SOLVER);
+
+        Vector v1 = new BasicVector(new BasicVector(matrix.length));
+        v1.set(v1.length() - 1, 1);
+
+        Vector v = solver.solve(v1, LinearAlgebra.DENSE_FACTORY);
+
+///        System.out.println(v1);
+
         for (int i = 0; i < states.size(); i++) {
             State state = states.get(i);
             for (int j = 0; j < state.parts.size(); j++)
@@ -108,8 +128,8 @@ public class StatePool {
             for (int j = 1; j <= states.get(0).parts.get(i).getProcessorsCount(); j++)
                 System.out.print("[" + j + "] = " + p[i][j] + ",");
             System.out.println();
-
         }
+
     }
 
 

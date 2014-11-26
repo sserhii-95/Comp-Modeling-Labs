@@ -3,7 +3,8 @@ package lab4;
 import lab3.Part;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -26,11 +27,11 @@ public class PartPool {
     /**
      * HashMap of parts
      */
-    private HashMap<String, Part> parts;
+    private LinkedHashMap<String, Part> parts;
 
 
     private PartPool() {
-        parts = new HashMap<>();
+        parts = new LinkedHashMap<>();
     }
 
     /**
@@ -49,8 +50,9 @@ public class PartPool {
 
     public List<Part> getParts() {
         List<Part> parts = new ArrayList<>();
-        for (String s : this.parts.keySet())
-            parts.add(byName(s));
+        for (Iterator<Part> iterator = this.parts.values().iterator(); iterator.hasNext(); ) {
+            parts.add(iterator.next());
+        }
         return parts;
     }
 

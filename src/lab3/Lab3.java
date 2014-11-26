@@ -43,9 +43,9 @@ MD:	 0.0
     public static void main(String[] args) {
 
         Part cpu = new Part("CP", 1, 2);
-        Part ram = new Part("RAM", 2.5, 2);
+        Part ram = new Part("RAM", 1, 2);
 
-        Part norht = new Part("North Bridge", 2.3);
+        Part norht = new Part("North Bridge", 1);
         Part south = new Part("South Bridge", 7.5);
 
         Part isa = new Part("ISA", 375);
@@ -67,7 +67,7 @@ MD:	 0.0
         ram.addNext(norht, 1);
 
         south.addNext(norht, 0.5);
-        south.addNext(au, 0.49);
+        south.addNext(au, 0.4);
         south.addNext(isa, 0.05);
         south.addNext(md, 0.05);
 
@@ -84,9 +84,7 @@ MD:	 0.0
         lpt.addNext(cpu, 1);
 
 
-
-
-        MySystem system = new MySystem(cpu, 3, 0);
+        MySystem system = new MySystem(cpu, 100, 7000);
         system.run();
         System.out.println("---//---");
 
@@ -95,7 +93,12 @@ MD:	 0.0
 
         System.out.println("---//---");
 
-        for(Part part : partList)
+        int solve = 0;
+        for (Part part : partList) {
             System.out.println(part.stats());
+            solve += part.solvedTasks;
+        }
+
+        System.out.println("All: " + solve);
     }
 }

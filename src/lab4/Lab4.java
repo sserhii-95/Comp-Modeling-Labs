@@ -5,16 +5,16 @@ import lab3.Part;
 import lab4.states.State;
 import lab4.states.StatePool;
 
-
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Sergey
+ * @author Siryy Sergiy
  */
 public class Lab4 {
 
     public static void main(String[] args) {
+
 
         Part cpu = new Part("CP", 1,2);
         Part ram = new Part("RAM", 2.5,2);
@@ -24,12 +24,13 @@ public class Lab4 {
 
         Part isa = new Part("ISA", 375);
         Part au = new Part("AY", 7.5);
-        Part lpt = new Part("LPT", 375);
-        Part com = new Part("COM", 375);
-        Part md = new Part("MD", 375);
+        Part lpt = new Part("LPT", 370);
+        Part com = new Part("COM", 370);
+        Part md = new Part("MD", 370);
 
         List<Part> partList = Arrays.asList(cpu, ram, norht, south,
                 isa, au, lpt, com, md);
+
 
         cpu.addNext(cpu, 0.6);
         cpu.addNext(norht, 0.4);
@@ -41,7 +42,7 @@ public class Lab4 {
         ram.addNext(norht, 1);
 
         south.addNext(norht, 0.5);
-        south.addNext(au, 0.49);
+        south.addNext(au, 0.4);
         south.addNext(isa, 0.05);
         south.addNext(md, 0.05);
 
@@ -57,19 +58,26 @@ public class Lab4 {
 
         lpt.addNext(cpu, 1);
 
-        MySystem system = new MySystem(cpu, 3, 0);
-        system.run();
-
-
         for (Part part : partList)
             PartPool.getInstance().addPart(part);
 
+        System.out.println("Lab3...");
 
+        MySystem system = new MySystem(cpu, 3, 1000000);
+        system.run();
+
+        for (Part part : partList) {
+            System.out.println(part.stats());
+        }
+
+
+        System.out.println("Lab4...");
         State state = State.create();
         StatePool.getInstance().checkState(state);
 
         StatePool.getInstance().createGraph();
         StatePool.getInstance().solve();
+
 
     }
 }

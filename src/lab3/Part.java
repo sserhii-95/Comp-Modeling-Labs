@@ -2,7 +2,8 @@ package lab3;
 
 import java.util.ArrayList;
 
-import static java.lang.Math.*;
+import static java.lang.Math.log;
+import static java.lang.Math.random;
 
 /**
  * @author Sergiy Siryy
@@ -29,7 +30,7 @@ public class Part {
     private double time;    // Час системи ( Поки непотрібний )
     private double workTime[];
 
-    private int solvedTasks;
+    public int solvedTasks;
 
     public Part(String name, double midTime){
         this(name, midTime, 1);
@@ -138,7 +139,8 @@ public class Part {
             flag--;
         }
 
-        if (time + workTime > this.time) this.time = time + workTime;
+        //if ((time + workTime)*1.2 > this.time) this.time = (time + workTime)*1.2;
+        if ((time + workTime) > this.time) this.time = (time + workTime);
         return time + workTime;
     }
 
@@ -155,14 +157,10 @@ public class Part {
     }
 
     public String stats(){
-        String s = name + ":\n";
+        String s = name + ": ";
         if (time  == 0) time = 1e-100;
         for(int i = 0; i < processorsCount; i++)
-            s+="\t" + i + ":" +
-                    "\n\t " + processorsStats[i]/time + "\n";
-
-        s += "\n\t solved : " + solvedTasks;
-        s += "\n\t time : " + time;
+            s += " [" + (i + 1) + "] = " + processorsStats[i] / (time * 1.2) + ",";
         return s;
     }
 

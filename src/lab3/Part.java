@@ -10,6 +10,8 @@ import static java.lang.Math.random;
  */
 public class Part {
 
+    static int num = 0;
+
     public String name;    // Назва присрою
 
     public int processorsCount;  // Кількість процессорів
@@ -31,6 +33,12 @@ public class Part {
     private double workTime[];
 
     public int solvedTasks;
+
+    public void set(int queue, int processor) {
+        this.queue = queue;
+        this.processor = processor;
+        this.flag = processorsCount - processor;
+    }
 
     public Part(String name, double midTime){
         this(name, midTime, 1);
@@ -161,6 +169,7 @@ public class Part {
         if (time  == 0) time = 1e-100;
         for(int i = 0; i < processorsCount; i++)
             s += " [" + (i + 1) + "] = " + processorsStats[i] / (time * 1.2) + ",";
+        // s+="\n solved: "+solvedTasks;
         return s;
     }
 

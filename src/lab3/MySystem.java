@@ -28,7 +28,7 @@ public class MySystem {
      */
     public void run() {
 
-        int k = 100000000;
+        int k = 10000;
         for (int i = 0; i < head.getProcessorsCount(); i++) {
             problems.add(new Pair(head, head.addTaskToProcessor(0)));
         }

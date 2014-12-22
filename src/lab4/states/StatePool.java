@@ -22,14 +22,14 @@ public class StatePool {
         return ourInstance;
     }
 
-    private List<State> states;
+    public List<State> states;
     private List<List<Pair>> uv;
     private final int type; // 0 if linear, 1 if discrete
 
     private StatePool() {
         states = new ArrayList<>();
         uv = new ArrayList<>();
-        type = 1;
+        type = 0;
     }
 
     public int indexOf(State state) {
@@ -57,8 +57,8 @@ public class StatePool {
 
 
     public void createGraph() {
-        for (State state : states) {
-            state.getNext();
+        for (int i = 0; i < states.size(); i++) {
+            states.get(i).getNext();
         }
     }
 
@@ -74,6 +74,7 @@ public class StatePool {
 
         for (int i = 0; i < uv.size(); i++)
             matrix[matrix.length - 1][i] = 1;
+
 
 
         double delta = 1e-3;
@@ -109,7 +110,18 @@ public class StatePool {
         Vector v1 = new BasicVector(new BasicVector(matrix.length));
         v1.set(v1.length() - 1, 1);
 
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print("p" + (j + 1) + "*" + (int) (matrix[i][j] * 1000) / 1000.0 + (j < matrix[i].length - 1 ? " + " : " = "));
+            }
+            System.out.println(v1.get(i));
+        }
+
+
         Vector v = solver.solve(v1, LinearAlgebra.DENSE_FACTORY);
+
+        for (int i = 0; i < v.length(); i++)
+            System.out.println("p[" + i + "] = " + v.get(i));
 
 ///        System.out.println(v1);
 

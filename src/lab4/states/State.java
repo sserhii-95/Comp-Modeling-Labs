@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class State {
+public class State implements Cloneable {
 
     public static State create() {
         PartPool pool = PartPool.getInstance();

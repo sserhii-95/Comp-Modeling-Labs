@@ -5,7 +5,7 @@ import lab3.Part;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartModel {
+public class PartModel implements Cloneable {
 
     private Part part;      // reference on equal Part
 

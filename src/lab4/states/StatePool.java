@@ -42,9 +42,13 @@ public class StatePool {
 
     public State checkState(State state) {
         int i = indexOf(state);
-        if (i >= 0) return states.get(i);
+        if (i >= 0) {
+            System.out.println((1 + state.parent) + " -> " + (i + 1) + ": " + state);
+            return states.get(i);
+        }
 
         states.add(state);
+        System.out.println((state.parent + 1) + " -> " + states.size() + ": " + state);
         uv.add(new ArrayList<>());
         return state;
     }
@@ -64,6 +68,7 @@ public class StatePool {
 
 
     public void solve() {
+
         double[][] matrix = new double[uv.size() + 1][uv.size()];
         for (int i = 0; i < uv.size(); i++) {
             for (int j = 0; j < uv.get(i).size(); j++) {
@@ -74,7 +79,6 @@ public class StatePool {
 
         for (int i = 0; i < uv.size(); i++)
             matrix[matrix.length - 1][i] = 1;
-
 
 
         double delta = 1e-3;

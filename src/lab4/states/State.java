@@ -22,7 +22,7 @@ public class State implements Cloneable {
 
     public List<PartModel> parts;
 
-    private int parent;
+    public int parent;
 
     public State() {
         this.parts = new ArrayList<>();
@@ -72,14 +72,14 @@ public class State implements Cloneable {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (PartModel model : parts) {
-            s.append(model.getNameLine());
-        }
-        s.append("\n");
+//        for (PartModel model : parts) {
+//            s.append(model.getNameLine());
+//        }
+//        s.append("\n");
         for (PartModel model : parts) {
             s.append(model.toString()).append(" ");
         }
-        s.append(parent).append(" ").append(StatePool.getInstance().indexOf(this));
+        //s.append(parent).append(" ").append(StatePool.getInstance().indexOf(this));
         return s.toString();
     }
 

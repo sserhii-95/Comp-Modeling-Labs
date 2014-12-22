@@ -100,13 +100,11 @@ public class Lab4 {
         System.out.println("Lab4...");
 
         State state = State.create();
+        System.out.println();
         StatePool.getInstance().checkState(state);
 
-        StatePool.getInstance().createGraph();
 
-        for (State st : StatePool.getInstance().states) {
-            System.out.println(st);
-        }
+        StatePool.getInstance().createGraph();
 
         StatePool.getInstance().solve();
 
